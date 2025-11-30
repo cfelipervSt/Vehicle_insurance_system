@@ -1,13 +1,18 @@
 package com.cfrv.springboot.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.util.List;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
+@Getter
+@Setter
 @Table(name = "vehiculos")
 public class Vehiculo {
 
@@ -33,10 +38,14 @@ public class Vehiculo {
     @Column(name = "color", length = 30)
     private String color;
 
+    @OneToOne
+    @JoinColumn(name = "id_conductor")
+    private Conductor conductor;
 
-    public Vehiculo() {
+    @JsonManagedReference
+    @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL)
+    private List<Seguro> seguros;
 
-    }
 
     public Vehiculo(Long idVehiculo, String placa, String marca, String modelo, int ano, String color) {
         this.idVehiculo = idVehiculo;
@@ -44,55 +53,6 @@ public class Vehiculo {
         this.marca = marca;
         this.modelo = modelo;
         this.ano = ano;
-        this.color = color;
-    }
-
-
-    public Long getIdVehiculo() {
-        return idVehiculo;
-    }
-
-    public void setIdVehiculo(Long idVehiculo) {
-        this.idVehiculo = idVehiculo;
-    }
-
-    public String getPlaca() {
-        return placa;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public int getAno() {
-        return ano;
-    }
-
-    public void setAno(int ano) {
-        this.ano = ano;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
         this.color = color;
     }
 

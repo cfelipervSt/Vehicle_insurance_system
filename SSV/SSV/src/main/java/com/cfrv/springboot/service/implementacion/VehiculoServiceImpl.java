@@ -55,4 +55,3 @@ public class VehiculoServiceImpl implements VehicleService {
         vehiculoRepository.deleteById(idVehiculo);
     }
 }
-
